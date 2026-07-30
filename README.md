@@ -9,7 +9,9 @@
 
 CloudWatch costs creep up silently: log groups that keep data forever, alarms watching resources that were deleted months ago, dashboards nobody has opened since 2024. `cloudwatch-janitor` scans your account, lists every finding, and estimates what it's costing you per month.
 
-It never modifies anything. Four read-only API calls, that's it.
+It never modifies anything. Four read-only API calls, that's it. The output contains no account IDs or IAM identities — just resource names, issues, and estimates — so reports are safe to paste into a Slack thread or a ticket.
+
+Example output:
 
 ```
 CHECK             RESOURCE                        ISSUE                                              EST. $/MO
@@ -68,28 +70,6 @@ cloudwatch-janitor --json > findings.json
 | `stale-dashboards` | Dashboards **not modified in 180+ days** | Dashboards beyond the first 3 cost $3/month each |
 
 Cost estimates are deliberately rough (us-east-1 standard pricing) — they're there to help you prioritize, not to reconcile your bill.
-
-## Real-world run
-
-This is genuine output from running the published package against a real personal AWS account across six regions (resource name masked):
-
-```
-$ cloudwatch-janitor --region us-west-2
-Running log-retention...
-Running idle-log-groups...
-Running stale-alarms...
-Running stale-dashboards...
-
-CHECK          RESOURCE                  ISSUE                                                  EST. $/MO
--------------  ------------------------  -----------------------------------------------------  ---------
-log-retention  /aws/connect/**********   No retention policy (0.00 GB stored, growing forever)  0.00
-
-1 finding(s), estimated savings: $0.00/month (rough estimate, standard pricing)
-```
-
-Five other regions came back clean. A tidy personal account — but it still caught a log group from a long-forgotten Amazon Connect experiment, set to retain data *forever*. That's the pattern this tool exists for: the finding costs nothing today and silently grows into a line item. Production accounts with years of Lambda/EKS/ECS history typically surface much more.
-
-Note: the output never includes your account ID, IAM identity, or credentials — findings are just resource names, issues, and estimates, so reports are safe to share internally.
 
 ## Permissions
 
