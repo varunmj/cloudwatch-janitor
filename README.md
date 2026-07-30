@@ -69,6 +69,28 @@ cloudwatch-janitor --json > findings.json
 
 Cost estimates are deliberately rough (us-east-1 standard pricing) — they're there to help you prioritize, not to reconcile your bill.
 
+## Real-world run
+
+This is genuine output from running the published package against a real personal AWS account across six regions (resource name masked):
+
+```
+$ cloudwatch-janitor --region us-west-2
+Running log-retention...
+Running idle-log-groups...
+Running stale-alarms...
+Running stale-dashboards...
+
+CHECK          RESOURCE                  ISSUE                                                  EST. $/MO
+-------------  ------------------------  -----------------------------------------------------  ---------
+log-retention  /aws/connect/**********   No retention policy (0.00 GB stored, growing forever)  0.00
+
+1 finding(s), estimated savings: $0.00/month (rough estimate, standard pricing)
+```
+
+Five other regions came back clean. A tidy personal account — but it still caught a log group from a long-forgotten Amazon Connect experiment, set to retain data *forever*. That's the pattern this tool exists for: the finding costs nothing today and silently grows into a line item. Production accounts with years of Lambda/EKS/ECS history typically surface much more.
+
+Note: the output never includes your account ID, IAM identity, or credentials — findings are just resource names, issues, and estimates, so reports are safe to share internally.
+
 ## Permissions
 
 Least privilege, read-only. Attach [`docs/iam-policy.json`](docs/iam-policy.json):
