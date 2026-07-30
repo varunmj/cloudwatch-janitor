@@ -1,6 +1,7 @@
 # cloudwatch-janitor 🧹
 
 [![CI](https://github.com/varunmj/cloudwatch-janitor/actions/workflows/ci.yml/badge.svg)](https://github.com/varunmj/cloudwatch-janitor/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/cloudwatch-janitor.svg)](https://pypi.org/project/cloudwatch-janitor/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
@@ -23,6 +24,12 @@ stale-dashboards  team-x-dashboard                Not modified in 431 days      
 ```
 
 ## Install
+
+```bash
+pip install cloudwatch-janitor
+```
+
+Or straight from GitHub:
 
 ```bash
 pip install git+https://github.com/varunmj/cloudwatch-janitor.git
