@@ -1,5 +1,9 @@
 # cloudwatch-janitor 🧹
 
+[![CI](https://github.com/varunmj/cloudwatch-janitor/actions/workflows/ci.yml/badge.svg)](https://github.com/varunmj/cloudwatch-janitor/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+
 **Find the CloudWatch waste hiding in your AWS bill — in one read-only command.**
 
 CloudWatch costs creep up silently: log groups that keep data forever, alarms watching resources that were deleted months ago, dashboards nobody has opened since 2024. `cloudwatch-janitor` scans your account, lists every finding, and estimates what it's costing you per month.
@@ -21,13 +25,13 @@ stale-dashboards  team-x-dashboard                Not modified in 431 days      
 ## Install
 
 ```bash
-pip install git+https://github.com/YOUR_USERNAME/cloudwatch-janitor.git
+pip install git+https://github.com/varunmj/cloudwatch-janitor.git
 ```
 
 Or clone and run directly:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cloudwatch-janitor.git
+git clone https://github.com/varunmj/cloudwatch-janitor.git
 cd cloudwatch-janitor && pip install -e .
 ```
 
